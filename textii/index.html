@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEXT - DECORATION</title>
+    <style>
+        body {
+            background-color: black;
+            font-family: monospace;
+            margin: 0;
+            padding: 50px;
+            min-height: 200vh;
+            scroll-behavior: smooth;
+        }
+
+        p {
+            color: #777777; 
+            font-size: 77px;
+            font-weight: lighter;
+            white-space: pre-wrap;
+            line-height: 1.9; 
+            margin: 0;
+            letter-spacing: -1px; 
+            max-width: 1200px;
+        }
+
+        .word-wrapper {
+            display: inline-block;
+            position: relative;
+        }
+
+        .word {
+            position: relative;
+            display: inline-block;
+        }
+
+        .word::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: white;
+            width: var(--width, 0%);
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width 0.4s ease;
+        }
+
+        .space {
+            display: inline-block;
+            width: 0.3em;
+        }
+    </style>
+</head>
+<body>
+    <p id="animated-text"></p>
+    <img src="assets/images/text.gif" alt="text decoration" style="padding-left: 580px;">
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const text = `I really like programming animations and I think that if there were no animations, then websites would be boring and uninteresting. And I also want to separately express my warm feelings to designers, because they make beauty out of pixels by moving them`;
+            
+            const textElement = document.getElementById('animated-text');
+            
+            let wrappedText = '';
+            let wordCount = 0;
+            
+          
+            const words = text.split(/(\s+)/);
+            
+            words.forEach(word => {
+                if(word.trim().length > 0) {
+                    wrappedText += `<span class="word-wrapper"><span class="word" data-text="${word}" data-index="${wordCount++}">${word}</span></span>`;
+                } else if(word.includes(' ')) {
+                    wrappedText += `<span class="space">${word}</span>`;
+                }
+            });
+            
+            textElement.innerHTML = wrappedText;
+            
+            const wordElements = document.querySelectorAll('.word');
+            const totalWords = wordElements.length;
+            const windowHeight = window.innerHeight;
+            const textElementRect = textElement.getBoundingClientRect();
+            const textStartPosition = textElementRect.top + window.scrollY;
+            const textHeight = textElementRect.height;
+            
+            function updateWordColors() {
+                const scrollPosition = window.scrollY;
+                const textVisibleStart = scrollPosition - textStartPosition + windowHeight * 0.3;
+                const progress = Math.min(textVisibleStart / (textHeight * 0.6), 1);
+                
+                wordElements.forEach((word, index) => {
+                    const wordProgress = (progress * totalWords - index) * 1.5;
+                    const widthPercent = Math.min(Math.max(wordProgress * 100, 0), 100);
+                    word.style.setProperty('--width', `${widthPercent}%`);
+                });
+            }
+            
+            window.addEventListener('scroll', updateWordColors);
+            window.addEventListener('resize', updateWordColors);
+            updateWordColors();
+        });
+    </script>
+</body>
+</html>

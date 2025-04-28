@@ -1,0 +1,42 @@
+body {
+    background-color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    height: 300vh;
+    margin: 0;
+}
+
+p {
+    color: grey;
+    font-size: 20px; 
+    font-weight: bold;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.word {
+    display: inline-block;
+    position: relative;
+    margin-right: 0.3em; 
+}
+
+.word::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: white;
+    width: var(--width, 0%);
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.3s ease;
+}
+
+br {
+    display: block;
+    content: "";
+    margin-bottom: 1em;
+}
