@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEXT - DECORATION</title>
+    <link href="../text/assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <div class="karaoke"><span> I really like programming animations and I think that if there were no animations, then websites would be boring and uninteresting. And I also want to separately express my warm feelings to designers, because they make beauty out of pixels by moving them.</span>
+    </div>
+    <img src="assets/images/text.gif" alt="text decoration" style="padding-left: 580px;">
+</body>
+
+<script>
+    const span = document.querySelector('.karaoke span');
+
+window.addEventListener('scroll', () => {
+  const t = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+  span.style.backgroundPosition = `${-t * 100}% 0`;
+});
+</script>
+</html>
